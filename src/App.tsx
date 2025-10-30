@@ -7,6 +7,7 @@ import { AuthProvider } from "@/hooks/useAuth";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
+import HeartHealthInfo from "./pages/HeartHealthInfo";
 import Plans from "./pages/Plans";
 import PlanDetail from "./pages/PlanDetail";
 import Calendar from "./pages/Calendar";
@@ -24,6 +25,7 @@ const App = () => (
         <AuthProvider>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/info" element={<HeartHealthInfo />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/plans" element={<ProtectedRoute><Plans /></ProtectedRoute>} />
             <Route path="/plan/:slug" element={<ProtectedRoute><PlanDetail /></ProtectedRoute>} />

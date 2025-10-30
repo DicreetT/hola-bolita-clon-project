@@ -52,7 +52,7 @@ export default function Index() {
                 </div>
 
                 <button 
-                  onClick={() => navigate("/auth")}
+                  onClick={() => navigate("/info")}
                   className="w-full mt-6 bg-primary hover:bg-primary/90 text-white font-bold py-3 px-6 rounded-lg text-lg shadow-lg border-2 border-black/10 transition-all duration-300 hover:scale-105"
                 >
                   ¡Vamos allá!
