@@ -12,7 +12,7 @@ interface Session {
   plan_name: string;
   date: string;
   completed: boolean;
-  user: {
+  profiles: {
     full_name: string;
     email: string;
   } | null;
@@ -36,6 +36,8 @@ export default function AdminDashboard() {
   const { signOut } = useAuth();
   const [sessions, setSessions] = useState<Session[]>([]);
   const [loading, setLoading] = useState(true);
+  const [viewMode, setViewMode] = useState<'list' | 'charts'>('list');
+  const [selectedUser, setSelectedUser] = useState<string | null>(null);
 
   useEffect(() => {
     loadSessions();
@@ -46,7 +48,7 @@ export default function AdminDashboard() {
       .from("exercise_sessions")
       .select(`
         *,
-        user:profiles(full_name, email),
+        profiles!user_id(full_name, email),
         hr_records(*),
         sos_records(*)
       `)
@@ -57,7 +59,6 @@ export default function AdminDashboard() {
     }
 
     if (sessionsData) {
-      console.log("Sessions data:", sessionsData);
       setSessions(sessionsData as any);
     }
     setLoading(false);
@@ -91,9 +92,9 @@ export default function AdminDashboard() {
   }> = {};
 
   sessions.forEach(session => {
-    const userEmail = session.user?.email || 'unknown';
-    const fullName = session.user?.full_name?.trim();
-    const userName = (fullName && fullName.length > 0) ? fullName : session.user?.email || 'Usuario desconocido';
+    const userEmail = session.profiles?.email || 'unknown';
+    const fullName = session.profiles?.full_name?.trim();
+    const userName = (fullName && fullName.length > 0) ? fullName : session.profiles?.email || 'Usuario desconocido';
     const sessionDate = new Date(session.date).toLocaleDateString('es-ES', {
       year: 'numeric',
       month: 'long',
