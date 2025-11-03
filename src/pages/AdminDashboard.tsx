@@ -42,17 +42,22 @@ export default function AdminDashboard() {
   }, []);
 
   const loadSessions = async () => {
-    const { data: sessionsData } = await supabase
+    const { data: sessionsData, error } = await supabase
       .from("exercise_sessions")
       .select(`
         *,
-        user:profiles!user_id(full_name, email),
+        user:profiles(full_name, email),
         hr_records(*),
         sos_records(*)
       `)
       .order("date", { ascending: false });
 
+    if (error) {
+      console.error("Error loading sessions:", error);
+    }
+
     if (sessionsData) {
+      console.log("Sessions data:", sessionsData);
       setSessions(sessionsData as any);
     }
     setLoading(false);
