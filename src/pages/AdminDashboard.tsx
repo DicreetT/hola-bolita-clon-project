@@ -87,7 +87,7 @@ export default function AdminDashboard() {
 
   sessions.forEach(session => {
     const userEmail = session.user?.email || 'unknown';
-    const userName = session.user?.full_name || 'Usuario desconocido';
+    const userName = session.user?.full_name || session.user?.email || 'Usuario desconocido';
     const sessionDate = new Date(session.date).toLocaleDateString('es-ES', {
       year: 'numeric',
       month: 'long',
